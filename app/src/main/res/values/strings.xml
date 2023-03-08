@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ProjectPlanner</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="project_list">Project List</string>
+    <string name="project">Project</string>
+    <string name="task">Task</string>
 </resources>
