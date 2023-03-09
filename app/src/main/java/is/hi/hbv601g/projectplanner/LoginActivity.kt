@@ -1,5 +1,6 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,8 +20,7 @@ class LoginActivity : AppCompatActivity() {
         mLoginButton.isClickable = true
         mLoginButton.setOnClickListener {
             val intent = Intent(this, ProjectActivity::class.java)
-            startActivity(intent)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
-
     }
 }

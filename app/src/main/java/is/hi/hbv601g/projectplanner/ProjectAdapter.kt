@@ -12,11 +12,12 @@ import `is`.hi.hbv601g.projectplanner.data.Project
 class ProjectAdapter : ListAdapter<Project, ProjectAdapter.ProjectViewHolder>(ProjectDiffCallback){
     class ProjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val projectTextView: TextView = itemView.findViewById(R.id.project_title)
+        private val groupName: TextView = itemView.findViewById(R.id.group_name)
         private var currentProject: Project? = null
 
         fun bind(project: Project) {
             currentProject = project
-
+            groupName.text = project.groupName
             projectTextView.text = project.title
         }
     }
