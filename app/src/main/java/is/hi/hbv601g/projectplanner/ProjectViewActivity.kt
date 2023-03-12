@@ -1,5 +1,6 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -18,7 +19,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_view)
 
-        val taskAdapter = TaskAdapter()
+        val taskAdapter = TaskAdapter {task -> adapterOnClick(task)}
 
         val projectTitle: TextView = findViewById(R.id.project_title)
         val projectDescription: TextView = findViewById(R.id.project_description)
@@ -53,6 +54,13 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         }
 
 
+    }
+
+    private fun adapterOnClick(task: Task) {
+        val intent = Intent(this,TaskActivity()::class.java)
+        intent.putExtra("id",task.id)
+        intent.putExtra("name",task.name)
+        startActivity(intent)
     }
 
     private fun showCreateTaskDialog() {

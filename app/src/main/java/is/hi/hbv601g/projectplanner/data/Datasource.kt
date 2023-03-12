@@ -18,9 +18,6 @@ class Datasource {
     }
 
     fun getProject(id: Long): Project? {
-        for (p in projectsLiveData.value!!) {
-            println("id: "+p.id)
-        }
         projectsLiveData.value?.let {project ->
             return project.firstOrNull{it.id == id}
         }
@@ -51,5 +48,12 @@ class Datasource {
             updList.add(0,task)
             tasksLiveData.postValue(updList)
         }
+    }
+
+    fun getTask(id:Long): Task? {
+        tasksLiveData.value?.let {task ->
+            return task.firstOrNull{it.id == id}
+        }
+        return null
     }
 }

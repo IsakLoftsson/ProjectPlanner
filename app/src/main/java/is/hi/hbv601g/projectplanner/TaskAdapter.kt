@@ -7,12 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.Task
 
-class TaskAdapter() : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCallback){
-    class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCallback){
+    class TaskViewHolder(itemView: View, val onClick: (Task) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val taskName: TextView = itemView.findViewById(R.id.task_name)
         private var currentTask: Task? = null
+
+        init {
+            itemView.setOnClickListener{
+                currentTask?.let {
+                    onClick(it)
+                }
+            }
+        }
 
         fun bind(task: Task) {
             currentTask = task
@@ -22,7 +31,7 @@ class TaskAdapter() : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCall
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : TaskAdapter.TaskViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.task_item,parent,false)
-        return TaskAdapter.TaskViewHolder(view)
+        return TaskAdapter.TaskViewHolder(view, onClick)
     }
 
     override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {

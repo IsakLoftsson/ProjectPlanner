@@ -21,6 +21,9 @@
             android:name=".ProjectViewActivity"
             android:exported="true"/>
         <activity
+            android:name=".TaskActivity"
+            android:exported="true"/>
+        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login">
