@@ -5,5 +5,5 @@ data class Project(
     val ownerId: Long,
     val title: String,
     val description: String,
-    val groupName: String = ""
+    val groupName: String = "Group Members"
 )

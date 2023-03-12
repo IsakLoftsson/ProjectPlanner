@@ -1,7 +1,9 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
@@ -23,6 +25,14 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
 
         val projectTitle: TextView = findViewById(R.id.project_title)
         val projectDescription: TextView = findViewById(R.id.project_description)
+
+        val GroupMembersTextView = findViewById<TextView>(R.id.group_members)
+        GroupMembersTextView.setOnClickListener {
+            val myIntent = Intent(this, GroupMembersActivity::class.java)
+            myIntent.putExtra("id", currentProjectId)
+            startActivity(myIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
         val taskList: RecyclerView = findViewById(R.id.task_list)
         taskList.adapter = taskAdapter
         val mCreateTaskButton = findViewById<Button>(R.id.create_task)

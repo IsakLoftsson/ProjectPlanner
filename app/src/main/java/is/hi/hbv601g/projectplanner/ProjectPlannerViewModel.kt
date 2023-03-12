@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import `is`.hi.hbv601g.projectplanner.data.Datasource
+import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.Task
 import kotlin.random.Random
@@ -13,6 +14,7 @@ class ProjectPlannerViewModel : ViewModel() {
     private val datasource = Datasource()
     val projectsLiveData = datasource.getProjectList()
     val tasksLiveData = datasource.getTaskList()
+    val groupMembersLiveData = datasource.getGroupMembersList()
 
     fun getProjectsByUserId(id:Long): LiveData<List<Project>> {
         val filteredList = projectsLiveData.value?.filter{ project -> project.ownerId == id}
@@ -55,4 +57,11 @@ class ProjectPlannerViewModel : ViewModel() {
         println(name)
         datasource.addTask(newTask)
     }
+
+    fun getGroupMembersByProjectId(id:Long): LiveData<List<GroupMembers>> {
+        val filteredList = groupMembersLiveData.value?.filter{ groupMembers -> groupMembers.projectId == id}
+        return MutableLiveData(filteredList)
+    }
+
+
 }
