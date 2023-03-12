@@ -9,22 +9,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import `is`.hi.hbv601g.projectplanner.data.Project
 
-class ProjectAdapter : ListAdapter<Project, ProjectAdapter.ProjectViewHolder>(ProjectDiffCallback){
-    class ProjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val projectTextView: TextView = itemView.findViewById(R.id.project_title)
-        private val groupName: TextView = itemView.findViewById(R.id.group_name)
+class ProjectAdapter(private val onClick: (Project) -> Unit) : ListAdapter<Project, ProjectAdapter.ProjectViewHolder>(ProjectDiffCallback){
+    class ProjectViewHolder(itemView: View, val onClick: (Project) -> Unit) : RecyclerView.ViewHolder(itemView) {
+        private val projectTitle: TextView = itemView.findViewById(R.id.project_title)
         private var currentProject: Project? = null
+
+        init {
+            itemView.setOnClickListener {
+                currentProject?.let {
+                    onClick(it)
+                }
+            }
+        }
 
         fun bind(project: Project) {
             currentProject = project
-            groupName.text = project.groupName
-            projectTextView.text = project.title
+            projectTitle.text = project.title
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ProjectViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.project_item,parent,false)
-        return ProjectViewHolder(view)
+        return ProjectViewHolder(view, onClick)
     }
 
     override fun onBindViewHolder(holder: ProjectViewHolder, position: Int) {
