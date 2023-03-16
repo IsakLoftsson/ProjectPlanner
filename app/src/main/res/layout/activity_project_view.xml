@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:layout_margin="10dp"
+        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/group_members"/>

@@ -13,6 +13,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="200dp"
         app:layoutManager="LinearLayoutManager"
+        app:layout_constraintHeight_max="500dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
