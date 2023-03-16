@@ -52,8 +52,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
                 }
             })
         }
-
-
     }
 
     private fun adapterOnClick(task: Task) {
