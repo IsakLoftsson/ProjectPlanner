@@ -8,6 +8,8 @@ class Datasource {
     private val projectsLiveData = MutableLiveData(initialProjectList)
     private val initialTaskList = loadTasks()
     private val tasksLiveData = MutableLiveData(initialTaskList)
+    private val initialGroupMembersList = loadGroupMembers()
+    private val groupMembersLiveData = MutableLiveData(initialGroupMembersList)
 
     fun getProjectList(): LiveData<List<Project>> {
         return projectsLiveData
@@ -56,4 +58,10 @@ class Datasource {
         }
         return null
     }
+
+    fun getGroupMembersList(): LiveData<List<GroupMembers>> {
+        return groupMembersLiveData
+    }
+
+
 }
