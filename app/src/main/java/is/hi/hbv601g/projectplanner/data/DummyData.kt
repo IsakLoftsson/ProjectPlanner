@@ -1,5 +1,7 @@
 package `is`.hi.hbv601g.projectplanner.data
 
+import java.time.LocalDate
+
 fun loadProjects(): List<Project> {
     return listOf<Project>(
         Project(1,1,"Ameno", "Undirbúa það sem á að sýna á brakandi ferskum fimmtudagsfundi!"),
@@ -22,12 +24,12 @@ fun loadProjects(): List<Project> {
 
 fun loadTasks(): List<Task> {
     return listOf<Task> (
-        Task(1,1,"Layouts"),
-        Task(2,1,"Sideswiping"),
-        Task(3,1,"Task"),
-        Task(4,1,"Ameno"),
-        Task(5,1,"Omenare"),
-        Task(6,2,"Ameno")
+        Task(1,1,"Layouts", "Fix the layouts", "19.03.2023",2),
+        Task(2,1,"Sideswiping","Add the sideswiping", "19.03.2023",2),
+        //Task(3,1,"Task"),
+        //Task(4,1,"Ameno"),
+        //Task(5,1,"Omenare"),
+        //Task(6,2,"Ameno")
     )
 }
 
