@@ -26,10 +26,10 @@ fun loadTasks(): List<Task> {
     return listOf<Task> (
         Task(1,1,"Layouts", "Fix the layouts", "19.03.2023",2),
         Task(2,1,"Sideswiping","Add the sideswiping", "19.03.2023",2),
-        //Task(3,1,"Task"),
-        //Task(4,1,"Ameno"),
-        //Task(5,1,"Omenare"),
-        //Task(6,2,"Ameno")
+        Task(3,1,"Task","Fix task information", "19.03.2023",2),
+        //Task(4,1,"Ameno","Add the sideswiping", "19.03.2023",2),
+        //Task(5,1,"Omenare","Add the sideswiping", "19.03.2023",2),
+        //Task(6,2,"Ameno","Add the sideswiping", "19.03.2023",2)
     )
 }
 

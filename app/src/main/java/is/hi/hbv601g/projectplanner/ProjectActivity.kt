@@ -45,7 +45,7 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
         intent.putExtra("id",project.id)
         intent.putExtra("title",project.title)
         intent.putExtra("description",project.description)
-        startActivity(intent)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     private fun showCreateProjectDialog() {

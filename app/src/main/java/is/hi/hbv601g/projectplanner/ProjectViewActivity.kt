@@ -70,6 +70,9 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         val intent = Intent(this,TaskActivity()::class.java)
         intent.putExtra("id",task.id)
         intent.putExtra("name",task.name)
+        intent.putExtra("description",task.description)
+        intent.putExtra("deadline",task.deadline)
+        intent.putExtra("ownerId",task.ownerId)
         startActivity(intent)
     }
 
@@ -79,6 +82,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
     }
 
     override fun onDialogPositiveClick(name: String) {
-        currentProjectId?.let { projectPlannerViewModel.addTask(it,name) }
+        currentProjectId?.let { projectPlannerViewModel.addTask(it,name, "Description example", "Deadline example", 2) }
     }
 }

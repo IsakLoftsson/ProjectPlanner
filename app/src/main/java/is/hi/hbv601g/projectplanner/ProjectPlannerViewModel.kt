@@ -47,11 +47,15 @@ class ProjectPlannerViewModel : ViewModel() {
         return datasource.getTask(id)
     }
 
-    fun addTask(projectId: Long, name: String) {
+    fun addTask(projectId: Long, name: String, description: String, deadline: String, ownerId: Long) {
         val newTask = Task(
             Random.nextLong(),
             projectId,
-            name
+            name,
+            description,
+            deadline,
+            ownerId
+
         )
         println(projectId)
         println(name)
