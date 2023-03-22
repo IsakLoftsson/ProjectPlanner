@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import `is`.hi.hbv601g.projectplanner.data.Datasource
+import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
 class TaskActivity : FragmentActivity() {
     private val datasource = Datasource()
@@ -40,7 +41,8 @@ class TaskActivity : FragmentActivity() {
             taskName.text = currentTaskName
             taskDescription.text = currentTaskDescription
             taskDeadline.text = currentTaskDeadline
-            taskOwner.text = "issi pissi" //datasource.getGroupMember(currentTaskOwner)
+            //val tempCurrentTaskOwner: GroupMembers? = datasource.getGroupMember(currentTaskOwner)
+            taskOwner.text = datasource.getGroupMember(currentTaskOwner)?.name//toString()
         }
     }
 }

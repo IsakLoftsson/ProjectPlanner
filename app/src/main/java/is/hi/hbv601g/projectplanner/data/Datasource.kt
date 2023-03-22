@@ -63,7 +63,7 @@ class Datasource {
         return groupMembersLiveData
     }
 
-    fun getGroupMember(id: Long): GroupMembers? {
+    fun getGroupMember(id: Long?): GroupMembers? {
         groupMembersLiveData.value?.let {groupMembers ->
             return groupMembers.firstOrNull{it.id == id}
         }
