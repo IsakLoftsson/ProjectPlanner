@@ -41,7 +41,6 @@ class TaskActivity : FragmentActivity() {
             taskName.text = currentTaskName
             taskDescription.text = currentTaskDescription
             taskDeadline.text = currentTaskDeadline
-            //val tempCurrentTaskOwner: GroupMembers? = datasource.getGroupMember(currentTaskOwner)
             taskOwner.text = datasource.getGroupMember(currentTaskOwner)?.name//toString()
         }
     }

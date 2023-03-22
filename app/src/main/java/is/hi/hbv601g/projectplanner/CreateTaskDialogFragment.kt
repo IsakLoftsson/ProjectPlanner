@@ -1,9 +1,12 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.ClipDescription
 import android.content.Context
 import android.os.Bundle
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -13,7 +16,8 @@ class CreateTaskDialogFragment : DialogFragment() {
     internal lateinit var listener: CreateTaskDialogListener
 
     interface CreateTaskDialogListener {
-        fun onDialogPositiveClick(name: String)
+        fun onDialogPositiveClick(name: String, description: String, deadline: DatePicker)
+        //fun onDialogPositiveClick(deadline: DatePickerDialog)//, deadline : DatePickerDialog)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -28,8 +32,10 @@ class CreateTaskDialogFragment : DialogFragment() {
             }
             okButton.setOnClickListener {
                 val name = view.findViewById<EditText>(R.id.task_name)
-                if (name.text.toString().isNotEmpty()) {
-                    listener.onDialogPositiveClick(name.text.toString())
+                val description = view.findViewById<EditText>(R.id.task_description)
+                val deadline = view.findViewById<DatePicker>(R.id.task_deadline)
+                if (name.text.toString().isNotEmpty() and description.text.toString().isNotEmpty()) {
+                    listener.onDialogPositiveClick(name.text.toString(),description.text.toString(),deadline.text.toString)
                     this.dismiss()
                 }
             }

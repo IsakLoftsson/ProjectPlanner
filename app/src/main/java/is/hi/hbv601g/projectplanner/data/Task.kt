@@ -1,5 +1,6 @@
 package `is`.hi.hbv601g.projectplanner.data
 
+import android.widget.DatePicker
 import java.io.FileDescriptor
 import java.sql.Date
 
@@ -8,6 +9,6 @@ data class Task(
     val projectId: Long,
     val name: String,
     val description: String,
-    val deadline: String,
+    val deadline: DatePicker,
     val ownerId: Long
 )

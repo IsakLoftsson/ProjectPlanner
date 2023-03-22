@@ -14,7 +14,6 @@
         android:layout_marginBottom="4dp"
         android:autofillHints="@string/task_name"
         android:hint="@string/task_name"/>
-    <!--
    <EditText
        android:id="@+id/task_description"
        android:inputType="text"
@@ -25,23 +24,24 @@
        android:layout_marginRight="4dp"
        android:layout_marginBottom="4dp"
        android:autofillHints="@string/task_description"
-       android:hint="Description????"/>
+       android:hint="@string/task_description"/>
    <DatePicker
-       android:id="@+id/task_date"
+       android:id="@+id/task_deadline"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:layout_gravity="center"
        android:calendarViewShown="false"
        android:datePickerMode="spinner"/>
-   -->
-   <Button
-       android:id="@+id/cancel_button"
-       android:text="@string/cancel"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
    <Button
        android:id="@+id/ok_button"
        android:text="@string/submit"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/cancel_button"
+        android:text="@string/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ok_button"/>
 
 </LinearLayout>
