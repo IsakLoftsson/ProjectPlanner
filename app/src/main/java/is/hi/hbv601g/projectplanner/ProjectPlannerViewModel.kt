@@ -59,6 +59,7 @@ class ProjectPlannerViewModel : ViewModel() {
         )
         println(projectId)
         println(name)
+        println(deadline)
         datasource.addTask(newTask)
     }
 

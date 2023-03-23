@@ -9,6 +9,6 @@ data class Task(
     val projectId: Long,
     val name: String,
     val description: String,
-    val deadline: DatePicker,
+    val deadline: String,
     val ownerId: Long
 )
