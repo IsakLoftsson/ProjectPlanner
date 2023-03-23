@@ -10,12 +10,15 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import `is`.hi.hbv601g.projectplanner.data.Project
 
 class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreateProjectDialogListener {
 
-    private val projectPlannerViewModel = ProjectPlannerViewModel()
+    private val viewModel: ProjectPlannerViewModel by lazy {
+        ViewModelProvider(this,ProjectPlannerViewModel.Factory(this.application)).get(ProjectPlannerViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
             showCreateProjectDialog()
         }
 
-        projectPlannerViewModel.projectsLiveData.observe(this, {
+        viewModel.projectsLiveData.observe(this, {
             it?.let {
                 projectAdapter.submitList(it as MutableList<Project>)
             }
@@ -54,6 +57,6 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
     }
 
     override fun onDialogPositiveClick(title: String, description: String) {
-        projectPlannerViewModel.addProject(1,title,description)
+        viewModel.addProject(1,title,description)
     }
 }

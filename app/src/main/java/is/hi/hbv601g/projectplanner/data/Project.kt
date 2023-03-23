@@ -1,7 +1,11 @@
 package `is`.hi.hbv601g.projectplanner.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Project(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val ownerId: Long,
     val title: String,
     val description: String,

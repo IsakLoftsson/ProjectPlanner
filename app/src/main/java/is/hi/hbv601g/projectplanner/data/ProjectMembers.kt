@@ -2,11 +2,10 @@ package `is`.hi.hbv601g.projectplanner.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity
-data class Task(
+data class ProjectMembers(
     @PrimaryKey val id: Long,
-    val projectId: Long,
-    val name: String
+    val userId: Long,
+    val projectId: Long
 )

@@ -2,11 +2,12 @@ package `is`.hi.hbv601g.projectplanner.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity
-data class Task(
+data class AppUser(
     @PrimaryKey val id: Long,
-    val projectId: Long,
-    val name: String
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val password: String
 )

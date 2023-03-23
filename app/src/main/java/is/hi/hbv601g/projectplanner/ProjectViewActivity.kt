@@ -7,12 +7,15 @@ import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.Task
 
 class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateTaskDialogListener {
-    private val projectPlannerViewModel = ProjectPlannerViewModel()
+    private val viewModel: ProjectPlannerViewModel by lazy {
+        ViewModelProvider(this,ProjectPlannerViewModel.Factory(this.application)).get(ProjectPlannerViewModel::class.java)
+    }
     var currentProjectId: Long? = null
     var currentProjectTitle: String? = null
     var currentProjectDescription: String? = null
@@ -56,7 +59,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
             projectTitle.text = currentProjectTitle
             projectDescription.text = currentProjectDescription
 
-            projectPlannerViewModel.getTasksByProjectId(it).observe(this, {
+            viewModel.tasksLiveData.observe(this, {
                 it?.let {
                     taskAdapter.submitList(it as MutableList<Task>)
                 }
@@ -77,6 +80,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
     }
 
     override fun onDialogPositiveClick(name: String) {
-        currentProjectId?.let { projectPlannerViewModel.addTask(it,name) }
+        currentProjectId?.let { viewModel.addTask(it,name) }
     }
 }

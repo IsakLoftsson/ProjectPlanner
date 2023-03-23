@@ -1,29 +1,23 @@
 package `is`.hi.hbv601g.projectplanner
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import `is`.hi.hbv601g.projectplanner.data.Datasource
-import `is`.hi.hbv601g.projectplanner.data.GroupMembers
-import `is`.hi.hbv601g.projectplanner.data.Project
-import `is`.hi.hbv601g.projectplanner.data.Task
+import android.app.Application
+import androidx.lifecycle.*
+import `is`.hi.hbv601g.projectplanner.data.*
 import kotlin.random.Random
 
-class ProjectPlannerViewModel : ViewModel() {
+class ProjectPlannerViewModel(application: Application) : AndroidViewModel(application) {
     private val datasource = Datasource()
-    val projectsLiveData = datasource.getProjectList()
-    val tasksLiveData = datasource.getTaskList()
+    private val projectPlannerRepository = ProjectPlannerRepository(getDatabase(application))
+    val projectsLiveData = projectPlannerRepository.projectsLiveData
+    val tasksLiveData = projectPlannerRepository.tasksLiveData
     val groupMembersLiveData = datasource.getGroupMembersList()
 
-    fun getProjectsByUserId(id:Long): LiveData<List<Project>> {
-        val filteredList = projectsLiveData.value?.filter{ project -> project.ownerId == id}
-        return MutableLiveData(filteredList)
+    fun getProjectsByUserId(id:Long) {
+        projectPlannerRepository.setProjects(id)
     }
 
-    fun getTasksByProjectId(id:Long): LiveData<List<Task>> {
-        val filteredList = tasksLiveData.value?.filter{ task -> task.projectId == id}
-        return MutableLiveData(filteredList)
+    fun getTasksByProjectId(id:Long) {
+        projectPlannerRepository.setTasks(id)
     }
 
     fun addProject(ownerId: Long,title: String,description: String) {
@@ -35,7 +29,7 @@ class ProjectPlannerViewModel : ViewModel() {
             description
         )
 
-        datasource.addProject(newProject)
+        projectPlannerRepository.addProject(newProject)
     }
 
     fun getProject(id:Long): Project? {
@@ -55,7 +49,7 @@ class ProjectPlannerViewModel : ViewModel() {
         )
         println(projectId)
         println(name)
-        datasource.addTask(newTask)
+        projectPlannerRepository.addTask(newTask)
     }
 
     fun getGroupMembersByProjectId(id:Long): LiveData<List<GroupMembers>> {
@@ -63,5 +57,13 @@ class ProjectPlannerViewModel : ViewModel() {
         return MutableLiveData(filteredList)
     }
 
-
+    class Factory(val app: Application): ViewModelProvider.Factory {
+        override fun <T: ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ProjectPlannerViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return ProjectPlannerViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
 }
