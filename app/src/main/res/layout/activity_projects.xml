@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjectActivity">
+    tools:context=".ProjectActivity"
+    android:background="@color/cardview_light_background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/project_list"

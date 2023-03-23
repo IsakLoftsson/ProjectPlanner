@@ -19,7 +19,6 @@ import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePic
 class CreateTaskDialogFragment : DialogFragment() {
 
     internal lateinit var listener: CreateTaskDialogListener
-    private val dateString = ""
 
     interface CreateTaskDialogListener {
         fun onDialogPositiveClick(name: String, description: String, deadline: String)
@@ -32,19 +31,23 @@ class CreateTaskDialogFragment : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_create_task,null)
             val cancelButton = view.findViewById<Button>(R.id.cancel_button)
             val okButton = view.findViewById<Button>(R.id.ok_button)
+
             cancelButton.setOnClickListener {
                 this.dismiss()
             }
+
             okButton.setOnClickListener {
                 val name = view.findViewById<EditText>(R.id.task_name)
                 val description = view.findViewById<EditText>(R.id.task_description)
                 val deadline = view.findViewById<DatePicker>(R.id.task_deadline)
+
                 val calendar = Calendar.getInstance()
                 calendar.set(deadline.year,deadline.month,deadline.dayOfMonth)
                 val dateStringFormat = SimpleDateFormat("dd-MM-yyy")
-                val stringDate = dateStringFormat.format(calendar.time)
-                    if (name.text.toString().isNotEmpty() and description.text.toString().isNotEmpty()) {
-                    listener.onDialogPositiveClick(name.text.toString(),description.text.toString(),stringDate)
+                val dateString = dateStringFormat.format(calendar.time)
+
+                if (name.text.toString().isNotEmpty() and description.text.toString().isNotEmpty()) {
+                    listener.onDialogPositiveClick(name.text.toString(),description.text.toString(),dateString)
                     this.dismiss()
                 }
             }

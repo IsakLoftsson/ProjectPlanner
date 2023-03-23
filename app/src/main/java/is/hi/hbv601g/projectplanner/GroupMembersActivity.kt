@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 import `is`.hi.hbv601g.projectplanner.data.Task
 
@@ -15,6 +16,8 @@ class GroupMembersActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_members)
+        Slidr.attach(this);
+
         val groupMembersAdapter = GroupMembersAdapter()
         val groupMembersList: RecyclerView = findViewById(R.id.group_members_list)
         groupMembersList.adapter = groupMembersAdapter

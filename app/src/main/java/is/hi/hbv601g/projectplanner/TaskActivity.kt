@@ -3,6 +3,7 @@ package `is`.hi.hbv601g.projectplanner
 import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Datasource
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
@@ -18,6 +19,7 @@ class TaskActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
+        Slidr.attach(this);
 
         val taskName: TextView = findViewById(R.id.task_name)
         val taskDescription: TextView = findViewById(R.id.task_description)

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.Task
 
@@ -20,6 +21,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_view)
+        Slidr.attach(this);
 
         val taskAdapter = TaskAdapter {task -> adapterOnClick(task)}
 

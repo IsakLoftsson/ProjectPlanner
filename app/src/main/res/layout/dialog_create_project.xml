@@ -25,15 +25,19 @@
         android:layout_marginBottom="16dp"
         android:autofillHints="@string/description"
         android:hint="@string/description"/>
-    <Button
-        android:id="@+id/cancel_button"
-        android:text="@string/cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/ok_button"
-        android:text="@string/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cancel_button"
+            android:text="@string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/ok_button"
+            android:text="@string/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
