@@ -27,9 +27,9 @@ fun loadTasks(): List<Task> {
         Task(1,1,"Layouts", "Fix the layouts", "21.03.2023",2, "In Progress"),
         Task(2,1,"Sideswiping","Add the sideswiping", "19.03.2023",1, "Completed"),
         Task(3,1,"Task","Fix task information", "22.03.2023",2, "In Progress"),
-        //Task(4,1,"Ameno","Add the sideswiping", "19.03.2023",2),
-        //Task(5,1,"Omenare","Add the sideswiping", "19.03.2023",2),
-        //Task(6,2,"Ameno","Add the sideswiping", "19.03.2023",2)
+        Task(4,1,"Status","Add status to Tasks", "19.03.2023",2, "Completed"),
+        Task(5,1,"Edit Status","Add editability to statuses ", "19.03.2023",2, "In Progress"),
+        Task(6,2,"Edit Deadline","Add editability to deadline", "19.03.2023",2, "In Progress")
     )
 }
 

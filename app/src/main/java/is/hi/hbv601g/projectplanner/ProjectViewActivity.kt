@@ -73,7 +73,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         intent.putExtra("description",task.description)
         intent.putExtra("deadline",task.deadline)
         intent.putExtra("ownerId",task.ownerId)
-        intent.putExtra("ownerId",task.status)
+        intent.putExtra("status",task.status)
         startActivity(intent)
     }
 
