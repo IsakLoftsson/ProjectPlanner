@@ -42,6 +42,18 @@
         app:layout_constraintTop_toBottomOf="@+id/task_deadline"/>
 
     <TextView
+        android:id="@+id/task_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Status"
+        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:textColor="#1FCC26"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task_owner"/>
+
+    <TextView
         android:id="@+id/task_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +63,6 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_owner"/>
+        app:layout_constraintTop_toBottomOf="@+id/task_status"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package `is`.hi.hbv601g.projectplanner
 
 import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.r0adkll.slidr.Slidr
@@ -15,6 +17,7 @@ class TaskActivity : FragmentActivity() {
     var currentTaskDescription: String? = null
     var currentTaskDeadline: String? = null
     var currentTaskOwner: Long? = null
+    var currentTaskStatus: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +28,9 @@ class TaskActivity : FragmentActivity() {
         val taskDescription: TextView = findViewById(R.id.task_description)
         val taskDeadline: TextView = findViewById(R.id.task_deadline)
         val taskOwner: TextView = findViewById(R.id.task_owner)
-
+        val taskStatus: TextView = findViewById(R.id.task_status)
 
         val bundle: Bundle? = intent.extras
-        println(bundle)
 
         if (bundle != null) {
             currentTaskId = bundle.getLong("id")
@@ -36,7 +38,7 @@ class TaskActivity : FragmentActivity() {
             currentTaskDescription = bundle.getString("description")
             currentTaskDeadline = bundle.getString("deadline")
             currentTaskOwner = bundle.getLong("ownerId")
-            println("currentTaskOwner: " + currentTaskOwner)
+            currentTaskStatus = bundle.getString("status")
         }
 
         currentTaskId?.let {
@@ -44,6 +46,7 @@ class TaskActivity : FragmentActivity() {
             taskDescription.text = currentTaskDescription
             taskDeadline.text = currentTaskDeadline
             taskOwner.text = datasource.getGroupMember(currentTaskOwner)?.name//toString()
+            taskStatus.text = currentTaskStatus
         }
     }
 }

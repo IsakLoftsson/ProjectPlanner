@@ -3,13 +3,11 @@ package `is`.hi.hbv601g.projectplanner
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.r0adkll.slidr.Slidr
-import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.Task
 
 class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateTaskDialogListener {
@@ -75,6 +73,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         intent.putExtra("description",task.description)
         intent.putExtra("deadline",task.deadline)
         intent.putExtra("ownerId",task.ownerId)
+        intent.putExtra("ownerId",task.status)
         startActivity(intent)
     }
 
@@ -83,7 +82,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         dialog.show(supportFragmentManager,"CreateProjectDialogFragment")
     }
 
-    override fun onDialogPositiveClick(name: String, description: String, deadline: String) {
-        currentProjectId?.let { projectPlannerViewModel.addTask(it,name, description, deadline, 2) }
+    override fun onDialogPositiveClick(name: String, description: String, deadline: String, status: String) {
+        currentProjectId?.let { projectPlannerViewModel.addTask(it,name, description, deadline, 2, status) }
     }
 }

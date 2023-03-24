@@ -20,4 +20,11 @@
     <string name="task_name">Task Name</string>
     <string name="create_task">Create Task</string>
     <string name="task_description">Description</string>
+    <string-array name="task_status">
+        <item>Not Started</item>
+        <item>In Process</item>
+        <item>Pending</item>
+        <item>Complete</item>
+        <item>Canceled</item>
+    </string-array>
 </resources>
