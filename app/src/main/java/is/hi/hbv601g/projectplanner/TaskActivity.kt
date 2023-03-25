@@ -1,5 +1,7 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.Spinner
@@ -29,6 +31,10 @@ class TaskActivity : FragmentActivity() {
         val taskDeadline: TextView = findViewById(R.id.task_deadline)
         val taskOwner: TextView = findViewById(R.id.task_owner)
         val taskStatus: TextView = findViewById(R.id.task_status)
+
+        taskDeadline.setOnClickListener {
+            DeadlineDialogFragment()
+        }
 
         val bundle: Bundle? = intent.extras
 

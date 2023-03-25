@@ -26,8 +26,8 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         val projectTitle: TextView = findViewById(R.id.project_title)
         val projectDescription: TextView = findViewById(R.id.project_description)
 
-        val GroupMembersTextView = findViewById<TextView>(R.id.group_members)
-        GroupMembersTextView.setOnClickListener {
+        val groupMembers = findViewById<TextView>(R.id.group_members)
+        groupMembers.setOnClickListener {
             val myIntent = Intent(this, GroupMembersActivity::class.java)
             myIntent.putExtra("id", currentProjectId)
             startActivity(myIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
