@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Datasource
 
-class TaskActivity : FragmentActivity(), DeadlineDialogFragment.DeadlineDialogListener {
+class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.DeadlineDialogListener {
     private val projectPlannerViewModel = ProjectPlannerViewModel()
     private val datasource = Datasource()
     val groupMembersLiveData = datasource.getGroupMembersList()
@@ -30,7 +30,7 @@ class TaskActivity : FragmentActivity(), DeadlineDialogFragment.DeadlineDialogLi
         val taskStatus: TextView = findViewById(R.id.task_status)
 
         taskDeadline.setOnClickListener {
-            showDeadlineDialogFragment()
+            showTaskDeadlineDialogFragment()
         }
 
         val bundle: Bundle? = intent.extras
@@ -54,12 +54,21 @@ class TaskActivity : FragmentActivity(), DeadlineDialogFragment.DeadlineDialogLi
         }
     }
 
-    private fun showDeadlineDialogFragment() {
-        val dialog = DeadlineDialogFragment()
-        dialog.show(supportFragmentManager, "DeadlineDialogFragment")
+    private fun showTaskDeadlineDialogFragment() {
+        val dialog = TaskDeadlineDialogFragment()
+        dialog.show(supportFragmentManager, "TaskDeadlineDialogFragment")
     }
 
-    override fun onDeadlineDialogPositiveClick(deadline: String) {
+    private fun showTaskStatusDialogFragment() {
+        val dialog = TaskDeadlineDialogFragment()
+        dialog.show(supportFragmentManager, "TaskDeadlineDialogFragment")
+    }
+
+    override fun onTaskDeadlineDialogPositiveClick(deadline: String) {
+        currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), deadline, it, currentTaskStatus.toString()) }
+    }
+
+    override fun onTaskStatusDialogPositiveClick(status: String) {
         currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), deadline, it, currentTaskStatus.toString()) }
     }
 }

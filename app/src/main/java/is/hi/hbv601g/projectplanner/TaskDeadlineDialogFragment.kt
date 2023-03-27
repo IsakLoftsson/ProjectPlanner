@@ -10,12 +10,12 @@ import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class DeadlineDialogFragment : DialogFragment() {
+class TaskDeadlineDialogFragment : DialogFragment() {
 
     private lateinit var listener: DeadlineDialogListener
 
     interface DeadlineDialogListener {
-        fun onDeadlineDialogPositiveClick(deadline: String)
+        fun onTaskDeadlineDialogPositiveClick(deadline: String)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,7 +31,7 @@ class DeadlineDialogFragment : DialogFragment() {
                 calendar.set(deadline.year,deadline.month,deadline.dayOfMonth)
                 val dateStringFormat = SimpleDateFormat("dd-MM-yyy")
                 val dateString = dateStringFormat.format(calendar.time)
-                listener.onDeadlineDialogPositiveClick(dateString)
+                listener.onTaskDeadlineDialogPositiveClick(dateString)
                 this.dismiss()
             }
             builder.setView(view)
