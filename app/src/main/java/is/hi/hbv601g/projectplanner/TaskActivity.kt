@@ -1,19 +1,16 @@
 package `is`.hi.hbv601g.projectplanner
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
-import android.widget.DatePicker
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Datasource
-import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
-class TaskActivity : FragmentActivity() {
+class TaskActivity : FragmentActivity(), DeadlineDialogFragment.DeadlineDialogListener {
+    private val projectPlannerViewModel = ProjectPlannerViewModel()
     private val datasource = Datasource()
     val groupMembersLiveData = datasource.getGroupMembersList()
+    var currentProjectId: Long? = null
     var currentTaskId: Long? = null
     var currentTaskName: String? = null
     var currentTaskDescription: String? = null
@@ -33,13 +30,14 @@ class TaskActivity : FragmentActivity() {
         val taskStatus: TextView = findViewById(R.id.task_status)
 
         taskDeadline.setOnClickListener {
-            DeadlineDialogFragment()
+            showDeadlineDialogFragment()
         }
 
         val bundle: Bundle? = intent.extras
 
         if (bundle != null) {
             currentTaskId = bundle.getLong("id")
+            currentProjectId = bundle.getLong("projectId")
             currentTaskName = bundle.getString("name")
             currentTaskDescription = bundle.getString("description")
             currentTaskDeadline = bundle.getString("deadline")
@@ -54,5 +52,14 @@ class TaskActivity : FragmentActivity() {
             taskOwner.text = datasource.getGroupMember(currentTaskOwner)?.name//toString()
             taskStatus.text = currentTaskStatus
         }
+    }
+
+    private fun showDeadlineDialogFragment() {
+        val dialog = DeadlineDialogFragment()
+        dialog.show(supportFragmentManager, "DeadlineDialogFragment")
+    }
+
+    override fun onDeadlineDialogPositiveClick(deadline: String) {
+        currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), deadline, it, currentTaskStatus.toString()) }
     }
 }

@@ -1,21 +1,21 @@
 package `is`.hi.hbv601g.projectplanner
 
 import android.app.Dialog
+import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
 import android.widget.DatePicker
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
 class DeadlineDialogFragment : DialogFragment() {
 
-    internal lateinit var listener: DeadlineDialogListener
+    private lateinit var listener: DeadlineDialogListener
 
     interface DeadlineDialogListener {
-        fun onDialogPositiveClick(deadline: String)
+        fun onDeadlineDialogPositiveClick(deadline: String)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,11 +31,20 @@ class DeadlineDialogFragment : DialogFragment() {
                 calendar.set(deadline.year,deadline.month,deadline.dayOfMonth)
                 val dateStringFormat = SimpleDateFormat("dd-MM-yyy")
                 val dateString = dateStringFormat.format(calendar.time)
-                listener.onDialogPositiveClick(dateString)
+                listener.onDeadlineDialogPositiveClick(dateString)
                 this.dismiss()
             }
             builder.setView(view)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            listener = context as DeadlineDialogListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException(("$context must implement DeadlineDialogListener"))
+        }
     }
 }

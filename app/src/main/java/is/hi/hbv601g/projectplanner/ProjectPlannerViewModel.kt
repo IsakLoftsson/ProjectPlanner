@@ -64,6 +64,27 @@ class ProjectPlannerViewModel : ViewModel() {
         datasource.addTask(newTask)
     }
 
+    fun editTask(taskId: Long, projectId: Long, name: String, description: String, deadline: String, ownerId: Long, status: String) {
+        val newTask = Task(
+            taskId,
+            projectId,
+            name,
+            description,
+            deadline,
+            ownerId,
+            status
+        )
+        println("------------ EDIT TASK ---------------")
+        println("taskID: "+taskId)
+        println("projectId: "+projectId)
+        println("name: "+name)
+        println("description: "+description)
+        println("deadline: "+deadline)
+        println("ownerId: "+ownerId)
+        println("status: "+status)
+        datasource.addTask(newTask)
+    }
+
     fun getGroupMembersByProjectId(id:Long): LiveData<List<GroupMembers>> {
         val filteredList = groupMembersLiveData.value?.filter{ groupMembers -> groupMembers.projectId == id}
         return MutableLiveData(filteredList)
