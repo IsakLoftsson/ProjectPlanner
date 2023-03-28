@@ -6,7 +6,8 @@ import androidx.fragment.app.FragmentActivity
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Datasource
 
-class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.DeadlineDialogListener {
+class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadlineDialogListener,
+    TaskStatusDialogFragment.TaskStatusDialogListener, TaskOwnerDialogFragment.TaskOwnerDialogListener {
     private val projectPlannerViewModel = ProjectPlannerViewModel()
     private val datasource = Datasource()
     val groupMembersLiveData = datasource.getGroupMembersList()
@@ -31,6 +32,14 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.DeadlineDial
 
         taskDeadline.setOnClickListener {
             showTaskDeadlineDialogFragment()
+        }
+
+        taskStatus.setOnClickListener {
+            showTaskStatusDialogFragment()
+        }
+
+        taskOwner.setOnClickListener {
+            showTaskOwnerDialogFragment()
         }
 
         val bundle: Bundle? = intent.extras
@@ -60,8 +69,13 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.DeadlineDial
     }
 
     private fun showTaskStatusDialogFragment() {
-        val dialog = TaskDeadlineDialogFragment()
-        dialog.show(supportFragmentManager, "TaskDeadlineDialogFragment")
+        val dialog = TaskStatusDialogFragment()
+        dialog.show(supportFragmentManager, "TaskStatusDialogFragment")
+    }
+
+    private fun showTaskOwnerDialogFragment() {
+        val dialog = TaskOwnerDialogFragment(currentProjectId)
+        dialog.show(supportFragmentManager, "TaskOwnerDialogFragment")
     }
 
     override fun onTaskDeadlineDialogPositiveClick(deadline: String) {
@@ -69,6 +83,10 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.DeadlineDial
     }
 
     override fun onTaskStatusDialogPositiveClick(status: String) {
-        currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), deadline, it, currentTaskStatus.toString()) }
+        currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline.toString(), it, status) }
+    }
+
+    override fun onTaskOwnerDialogPositiveClick(ownerId: Long) {
+        currentTaskId?.let { projectPlannerViewModel.editTask(currentTaskId!!,it,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline.toString(), ownerId, currentTaskStatus.toString()) }
     }
 }

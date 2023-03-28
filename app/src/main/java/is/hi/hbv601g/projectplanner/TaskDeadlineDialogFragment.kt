@@ -12,9 +12,9 @@ import androidx.fragment.app.DialogFragment
 
 class TaskDeadlineDialogFragment : DialogFragment() {
 
-    private lateinit var listener: DeadlineDialogListener
+    private lateinit var listener: TaskDeadlineDialogListener
 
-    interface DeadlineDialogListener {
+    interface TaskDeadlineDialogListener {
         fun onTaskDeadlineDialogPositiveClick(deadline: String)
     }
 
@@ -42,9 +42,9 @@ class TaskDeadlineDialogFragment : DialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            listener = context as DeadlineDialogListener
+            listener = context as TaskDeadlineDialogListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(("$context must implement DeadlineDialogListener"))
+            throw ClassCastException(("$context must implement TaskDeadlineDialogListener"))
         }
     }
 }

@@ -40,11 +40,11 @@ class GroupMembersActivity : FragmentActivity() {
         }
 
         currentProjectId?.let {
-            projectPlannerViewModel.getGroupMembersByProjectId(it).observe(this, {
+            projectPlannerViewModel.getGroupMembersByProjectId(it).observe(this) {
                 it?.let {
                     groupMembersAdapter.submitList(it as MutableList<GroupMembers>)
                 }
-            })
+            }
         }
 
 

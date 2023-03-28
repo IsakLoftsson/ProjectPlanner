@@ -62,12 +62,11 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
                 }
             })
         }
-
-
     }
 
     private fun adapterOnClick(task: Task) {
         val intent = Intent(this,TaskActivity()::class.java)
+        intent.putExtra("projectId", task.projectId)
         intent.putExtra("id",task.id)
         intent.putExtra("name",task.name)
         intent.putExtra("description",task.description)

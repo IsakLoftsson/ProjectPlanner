@@ -38,9 +38,9 @@ class TaskStatusDialogFragment : DialogFragment() {
             }
 
             okButton.setOnClickListener {
-                val status = view.findViewById<Spinner>(R.id.task_status)
-                val statusString = status.selectedItem.toString()
-                listener.onTaskStatusDialogPositiveClick(statusString)
+                //val status = view.findViewById<Spinner>(R.id.task_status)
+                //val statusString = status.selectedItem.toString()
+                listener.onTaskStatusDialogPositiveClick(taskStatusSpinner.getSelectedItem().toString())
                 this.dismiss()
             }
             builder.setView(view)

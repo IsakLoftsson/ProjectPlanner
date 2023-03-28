@@ -47,6 +47,14 @@ class ProjectPlannerViewModel : ViewModel() {
         return datasource.getTask(id)
     }
 
+    fun getGroupMemberId(id:Long): Long? {
+        return datasource.getGroupMember(id)!!.id
+    }
+
+    fun getGroupMemberName(id:Long): String? {
+        return datasource.getGroupMember(id)!!.name
+    }
+
     fun addTask(projectId: Long, name: String, description: String, deadline: String, ownerId: Long, status: String) {
         val newTask = Task(
             Random.nextLong(),
@@ -57,10 +65,13 @@ class ProjectPlannerViewModel : ViewModel() {
             ownerId,
             status
         )
-        println(projectId)
-        println(name)
-        println(deadline)
-        println(status)
+        println("------------ ADD TASK ---------------")
+        println("projectId: " + projectId)
+        println("name: " + name)
+        println("description: " + description)
+        println("deadline: " + deadline)
+        println("ownerId: " + ownerId)
+        println("status: " + status)
         datasource.addTask(newTask)
     }
 
@@ -90,5 +101,13 @@ class ProjectPlannerViewModel : ViewModel() {
         return MutableLiveData(filteredList)
     }
 
-
+    fun getGroupMembersNameByProjectId(id:Long?): ArrayList<String> {
+        var groupMembersNames = ArrayList<String>()
+        if (id != null) {
+            val groupMembersList: List<GroupMembers> = getGroupMembersByProjectId(id).value!!
+            for (item in groupMembersList)
+                groupMembersNames += item.name
+        }
+        return groupMembersNames
+    }
 }
