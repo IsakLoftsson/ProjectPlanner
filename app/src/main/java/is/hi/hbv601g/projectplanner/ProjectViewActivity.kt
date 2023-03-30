@@ -30,11 +30,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         val projectDescription: TextView = findViewById(R.id.project_description)
 
         val GroupMembersTextView = findViewById<TextView>(R.id.group_members)
-        GroupMembersTextView.setOnClickListener {
-            val myIntent = Intent(this, GroupMembersActivity::class.java)
-            myIntent.putExtra("id", currentProjectId)
-            startActivity(myIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        }
 
         val taskList: RecyclerView = findViewById(R.id.task_list)
         taskList.adapter = taskAdapter
@@ -55,7 +50,15 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
             currentProjectDescription = bundle.getString("description")
         }
 
+        GroupMembersTextView.setOnClickListener {
+            val myIntent = Intent(this, GroupMembersActivity::class.java)
+            myIntent.putExtra("id", currentProjectId)
+            startActivity(myIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
+
         currentProjectId?.let {
+            viewModel.getTasksByProjectId(currentProjectId!!)
             projectTitle.text = currentProjectTitle
             projectDescription.text = currentProjectDescription
 

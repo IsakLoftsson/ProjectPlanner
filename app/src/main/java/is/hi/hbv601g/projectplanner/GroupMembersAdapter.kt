@@ -7,17 +7,19 @@ import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import `is`.hi.hbv601g.projectplanner.data.AppUser
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
-class GroupMembersAdapter() : ListAdapter<GroupMembers, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback){
+class GroupMembersAdapter() : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback){
     class GroupMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val groupMembersName: TextView = itemView.findViewById(R.id.task_name)
-        private var currentGroupMembers: GroupMembers? = null
+        private var currentGroupMembers: AppUser? = null
 
-        fun bind(groupMembers: GroupMembers) {
+        fun bind(groupMembers: AppUser) {
             currentGroupMembers = groupMembers
-            groupMembersName.text = groupMembers.name
+            val text = groupMembers.firstName + " " + groupMembers.lastName
+            groupMembersName.text = text
         }
     }
 
@@ -32,12 +34,12 @@ class GroupMembersAdapter() : ListAdapter<GroupMembers, GroupMembersAdapter.Grou
     }
 }
 
-object GroupMembersDiffCallback : DiffUtil.ItemCallback<GroupMembers>() {
-    override fun areItemsTheSame(oldItem: GroupMembers, newItem: GroupMembers): Boolean {
+object GroupMembersDiffCallback : DiffUtil.ItemCallback<AppUser>() {
+    override fun areItemsTheSame(oldItem: AppUser, newItem: AppUser): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: GroupMembers, newItem: GroupMembers): Boolean {
+    override fun areContentsTheSame(oldItem: AppUser, newItem: AppUser): Boolean {
         return oldItem.id == newItem.id
     }
 }

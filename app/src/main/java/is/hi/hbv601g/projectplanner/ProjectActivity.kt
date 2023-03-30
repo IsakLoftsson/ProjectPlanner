@@ -1,6 +1,7 @@
 package `is`.hi.hbv601g.projectplanner
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -19,10 +20,14 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
     private val viewModel: ProjectPlannerViewModel by lazy {
         ViewModelProvider(this,ProjectPlannerViewModel.Factory(this.application)).get(ProjectPlannerViewModel::class.java)
     }
+    private var currentUserId: Long = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projects)
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        currentUserId = sharedPref.getLong("userId",1)
 
         val projectAdapter = ProjectAdapter {project -> adapterOnClick(project)}
 
@@ -35,6 +40,8 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
         mCreateProjectButton.setOnClickListener {
             showCreateProjectDialog()
         }
+
+        viewModel.getProjectsByUserId(currentUserId)
 
         viewModel.projectsLiveData.observe(this, {
             it?.let {
@@ -57,6 +64,6 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
     }
 
     override fun onDialogPositiveClick(title: String, description: String) {
-        viewModel.addProject(1,title,description)
+        viewModel.addProject(currentUserId,title,description)
     }
 }

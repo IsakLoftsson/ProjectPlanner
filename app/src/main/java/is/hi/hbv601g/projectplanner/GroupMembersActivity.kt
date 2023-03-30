@@ -4,12 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import `is`.hi.hbv601g.projectplanner.data.AppUser
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 import `is`.hi.hbv601g.projectplanner.data.Task
 
 class GroupMembersActivity : FragmentActivity() {
-    private val projectPlannerViewModel = ProjectPlannerViewModel()
+    private val viewModel: ProjectPlannerViewModel by lazy {
+        ViewModelProvider(this,ProjectPlannerViewModel.Factory(this.application)).get(ProjectPlannerViewModel::class.java)
+    }
     var currentProjectId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +41,10 @@ class GroupMembersActivity : FragmentActivity() {
         }
 
         currentProjectId?.let {
-            projectPlannerViewModel.getGroupMembersByProjectId(it).observe(this, {
+            viewModel.getGroupMembersByProjectId(currentProjectId!!)
+            viewModel.groupMembersLiveData.observe(this, {
                 it?.let {
-                    groupMembersAdapter.submitList(it as MutableList<GroupMembers>)
+                    groupMembersAdapter.submitList(it as MutableList<AppUser>)
                 }
             })
         }

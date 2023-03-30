@@ -10,7 +10,7 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
     private val projectPlannerRepository = ProjectPlannerRepository(getDatabase(application))
     val projectsLiveData = projectPlannerRepository.projectsLiveData
     val tasksLiveData = projectPlannerRepository.tasksLiveData
-    val groupMembersLiveData = datasource.getGroupMembersList()
+    val groupMembersLiveData = projectPlannerRepository.groupMembersLiveData
 
     fun getProjectsByUserId(id:Long) {
         projectPlannerRepository.setProjects(id)
@@ -18,6 +18,10 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
 
     fun getTasksByProjectId(id:Long) {
         projectPlannerRepository.setTasks(id)
+    }
+
+    fun getGroupMembersByProjectId(id:Long) {
+        projectPlannerRepository.setGroupMembers(id)
     }
 
     fun addProject(ownerId: Long,title: String,description: String) {
@@ -32,15 +36,6 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
         projectPlannerRepository.addProject(newProject)
     }
 
-    fun getProject(id:Long): Project? {
-        println(datasource.getProject(id)?.id)
-        return datasource.getProject(id)
-    }
-
-    fun getTask(id:Long): Task? {
-        return datasource.getTask(id)
-    }
-
     fun addTask(projectId: Long, name: String) {
         val newTask = Task(
             Random.nextLong(),
@@ -52,9 +47,28 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
         projectPlannerRepository.addTask(newTask)
     }
 
-    fun getGroupMembersByProjectId(id:Long): LiveData<List<GroupMembers>> {
-        val filteredList = groupMembersLiveData.value?.filter{ groupMembers -> groupMembers.projectId == id}
-        return MutableLiveData(filteredList)
+    fun registerUser(firstName: String, lastName: String, email: String, password: String) {
+        val newUser = AppUser(
+            Random.nextLong(),
+            firstName,
+            lastName,
+            email,
+            password
+        )
+        projectPlannerRepository.registerUser(newUser)
+    }
+
+    suspend fun loginUser(email: String, password: String): AppUser? {
+        return projectPlannerRepository.loginUser(email,password)
+    }
+
+    fun getProject(id:Long): Project? {
+        println(datasource.getProject(id)?.id)
+        return datasource.getProject(id)
+    }
+
+    fun getTask(id:Long): Task? {
+        return datasource.getTask(id)
     }
 
     class Factory(val app: Application): ViewModelProvider.Factory {

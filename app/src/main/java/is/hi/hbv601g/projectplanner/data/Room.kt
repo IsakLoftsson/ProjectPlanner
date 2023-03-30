@@ -11,6 +11,9 @@ interface AppUserDao {
     @Query("SELECT * FROM AppUser WHERE id IN (:ids)")
     fun getAllByIds(ids: List<Long>): List<AppUser>
 
+    @Query("SELECT * FROM AppUser WHERE email LIKE :email AND password LIKE :password")
+    fun getByEmailAndPassword(email: String, password: String): AppUser?
+
     @Insert
     fun insertUser(user: AppUser)
 }
