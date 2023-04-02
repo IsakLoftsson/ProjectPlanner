@@ -8,5 +8,9 @@ import java.sql.Date
 data class Task(
     @PrimaryKey val id: Long,
     val projectId: Long,
-    val name: String
+    val name: String,
+    val description: String,
+    val deadline: String,
+    val ownerId: Long,
+    val status: String
 )

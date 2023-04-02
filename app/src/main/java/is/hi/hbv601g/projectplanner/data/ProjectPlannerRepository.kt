@@ -49,6 +49,7 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
     fun addProjectMember(projectMembers: ProjectMembers) {
         CoroutineScope(Dispatchers.IO).launch {
             database.projectMembersDao().insertProjectMember(projectMembers)
+            setGroupMembers(projectMembers.projectId)
         }
     }
 
@@ -85,5 +86,15 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
             val curList = database.appUserDao().getAllByIds(listOfIds)
             groupMembersLiveData.postValue(curList)
         }
+    }
+
+    suspend fun getUserById(id: Long): AppUser? = suspendCoroutine {continuation ->
+        val user = database.appUserDao().getById(id)
+        continuation.resume(user)
+    }
+
+    suspend fun getUserByEmail(email: String): AppUser? = suspendCoroutine {continuation ->
+        val user = database.appUserDao().getByEmail(email)
+        continuation.resume(user)
     }
 }

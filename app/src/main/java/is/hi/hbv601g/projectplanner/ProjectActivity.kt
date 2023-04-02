@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Project
 
 class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreateProjectDialogListener {
@@ -25,6 +26,7 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projects)
+        Slidr.attach(this);
 
         val sharedPref = getSharedPreferences("prefs",Context.MODE_PRIVATE)
         currentUserId = sharedPref.getLong("userId",1)
@@ -63,7 +65,7 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
         intent.putExtra("id",project.id)
         intent.putExtra("title",project.title)
         intent.putExtra("description",project.description)
-        startActivity(intent)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     private fun showCreateProjectDialog() {

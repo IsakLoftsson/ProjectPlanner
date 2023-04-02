@@ -26,6 +26,7 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskA
         fun bind(task: Task) {
             currentTask = task
             taskName.text = task.name
+
         }
     }
 

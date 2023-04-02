@@ -3,13 +3,12 @@ package `is`.hi.hbv601g.projectplanner
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import `is`.hi.hbv601g.projectplanner.data.Project
+import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Task
 
 class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateTaskDialogListener {
@@ -23,6 +22,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_view)
+        Slidr.attach(this);
 
         val taskAdapter = TaskAdapter {task -> adapterOnClick(task)}
 
@@ -30,9 +30,16 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         val projectDescription: TextView = findViewById(R.id.project_description)
 
         val GroupMembersTextView = findViewById<TextView>(R.id.group_members)
+        val groupMembers = findViewById<TextView>(R.id.group_members)
+        groupMembers.setOnClickListener {
+            val myIntent = Intent(this, GroupMembersActivity::class.java)
+            myIntent.putExtra("id", currentProjectId)
+            startActivity(myIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val taskList: RecyclerView = findViewById(R.id.task_list)
         taskList.adapter = taskAdapter
+
         val mCreateTaskButton = findViewById<Button>(R.id.create_task)
         mCreateTaskButton.isEnabled = true
         mCreateTaskButton.isClickable = true
@@ -40,7 +47,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         mCreateTaskButton.setOnClickListener {
             showCreateTaskDialog()
         }
-
 
         val bundle: Bundle? = intent.extras
 
@@ -72,8 +78,14 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
 
     private fun adapterOnClick(task: Task) {
         val intent = Intent(this,TaskActivity()::class.java)
+        println("Clicked: "+task.id)
+        intent.putExtra("projectId", task.projectId)
         intent.putExtra("id",task.id)
         intent.putExtra("name",task.name)
+        intent.putExtra("description",task.description)
+        intent.putExtra("deadline",task.deadline)
+        intent.putExtra("ownerId",task.ownerId)
+        intent.putExtra("status",task.status)
         startActivity(intent)
     }
 
@@ -82,7 +94,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         dialog.show(supportFragmentManager,"CreateProjectDialogFragment")
     }
 
-    override fun onDialogPositiveClick(name: String) {
-        currentProjectId?.let { viewModel.addTask(it,name) }
+    override fun onDialogPositiveClick(name: String, description: String, deadline: String, status: String) {
+        currentProjectId?.let { viewModel.addTask(it,name, description, deadline, 2, status) }
     }
 }

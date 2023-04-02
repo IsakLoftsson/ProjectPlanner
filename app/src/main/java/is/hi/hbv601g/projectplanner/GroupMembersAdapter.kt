@@ -3,6 +3,7 @@ package `is`.hi.hbv601g.projectplanner
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SpinnerAdapter
 import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +12,7 @@ import `is`.hi.hbv601g.projectplanner.data.AppUser
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
-class GroupMembersAdapter() : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback){
+class GroupMembersAdapter() : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback) {
     class GroupMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val groupMembersName: TextView = itemView.findViewById(R.id.task_name)
         private var currentGroupMembers: AppUser? = null

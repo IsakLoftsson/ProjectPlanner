@@ -11,6 +11,9 @@ interface AppUserDao {
     @Query("SELECT * FROM AppUser WHERE id IN (:ids)")
     fun getAllByIds(ids: List<Long>): List<AppUser>
 
+    @Query("SELECT * FROM AppUser WHERE email LIKE :email")
+    fun getByEmail(email: String): AppUser?
+
     @Query("SELECT * FROM AppUser WHERE email LIKE :email AND password LIKE :password")
     fun getByEmailAndPassword(email: String, password: String): AppUser?
 
@@ -38,7 +41,7 @@ interface TaskDao {
     @Query("SELECT * FROM Task WHERE id == :id")
     fun getById(id: Long): Task
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTask(task: Task)
 }
 
