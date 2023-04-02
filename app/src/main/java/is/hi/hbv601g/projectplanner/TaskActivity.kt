@@ -3,6 +3,7 @@ package `is`.hi.hbv601g.projectplanner
 import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.Datasource
 
@@ -22,7 +23,7 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
-        Slidr.attach(this);
+        Slidr.attach(this)
 
         val taskName: TextView = findViewById(R.id.task_name)
         val taskDescription: TextView = findViewById(R.id.task_description)
@@ -41,6 +42,11 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
         taskOwner.setOnClickListener {
             showTaskOwnerDialogFragment()
         }
+
+        val commentsAdapter = CommentsAdapter()
+
+        val commentsList: RecyclerView = findViewById(R.id.comments_list)
+        commentsList.adapter = commentsAdapter
 
         val bundle: Bundle? = intent.extras
 

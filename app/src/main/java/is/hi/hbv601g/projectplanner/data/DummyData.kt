@@ -63,7 +63,7 @@ fun loadComments(): List<Comments> {
         Comments(4,"Almost done.", 1),
         Comments(5,"I was wrong, not almost done.", 1),
         Comments(6,"Almost done for real now.", 1),
-        Comments(6,"Almost done.", 2),
-        Comments(6,"Almost done.", 3)
+        Comments(7,"Almost done.", 2),
+        Comments(8,"Almost done.", 3)
     )
 }

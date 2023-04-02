@@ -130,4 +130,19 @@ class ProjectPlannerViewModel : ViewModel() {
         println("projectId: " + projectId)
         datasource.addGroupMembers(newGroupMember)
     }
+    fun addComment(id: Long, name: String, email: String, projectId: Long) {
+        val newGroupMember = GroupMembers(
+            id,
+            name,
+            email,
+            projectId
+        )
+        println("------------ ADD GROUP MEMBER ---------------")
+        println("id: " + id)
+        println("name: " + name)
+        println("email: " + email)
+        println("projectId: " + projectId)
+        datasource.addGroupMembers(newGroupMember)
+    }
+
 }

@@ -35,6 +35,7 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
 
         val taskList: RecyclerView = findViewById(R.id.task_list)
         taskList.adapter = taskAdapter
+
         val mCreateTaskButton = findViewById<Button>(R.id.create_task)
         mCreateTaskButton.isEnabled = true
         mCreateTaskButton.isClickable = true
@@ -42,7 +43,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
         mCreateTaskButton.setOnClickListener {
             showCreateTaskDialog()
         }
-
 
         val bundle: Bundle? = intent.extras
 
