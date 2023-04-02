@@ -26,7 +26,7 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projects)
 
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences("prefs",Context.MODE_PRIVATE)
         currentUserId = sharedPref.getLong("userId",1)
 
         val projectAdapter = ProjectAdapter {project -> adapterOnClick(project)}
@@ -48,6 +48,14 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
                 projectAdapter.submitList(it as MutableList<Project>)
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val sharedPref = this.getSharedPreferences("prefs",Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()
     }
 
     private fun adapterOnClick(project: Project) {

@@ -11,6 +11,7 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
     val projectsLiveData = projectPlannerRepository.projectsLiveData
     val tasksLiveData = projectPlannerRepository.tasksLiveData
     val groupMembersLiveData = projectPlannerRepository.groupMembersLiveData
+    val loginLiveData = MutableLiveData<Boolean>(false)
 
     fun getProjectsByUserId(id:Long) {
         projectPlannerRepository.setProjects(id)
@@ -60,6 +61,10 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
 
     suspend fun loginUser(email: String, password: String): AppUser? {
         return projectPlannerRepository.loginUser(email,password)
+    }
+
+    fun successLogin() {
+        loginLiveData.postValue(true)
     }
 
     fun getProject(id:Long): Project? {

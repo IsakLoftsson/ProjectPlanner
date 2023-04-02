@@ -60,9 +60,7 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
 
     suspend fun loginUser(email: String, password: String): AppUser? = suspendCoroutine {continuation ->
             val user = database.appUserDao().getByEmailAndPassword(email,password)
-            if (user != null) {
-                continuation.resume(user)
-            }
+            continuation.resume(user)
         }
 
 
