@@ -1,15 +1,14 @@
 package `is`.hi.hbv601g.projectplanner
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
-import `is`.hi.hbv601g.projectplanner.data.Task
 
-class GroupMembersActivity : FragmentActivity() {
+class GroupMembersActivity : FragmentActivity(), AddGroupMembersDialogFragment.AddGroupMembersDialogListener {
     private val projectPlannerViewModel = ProjectPlannerViewModel()
     var currentProjectId: Long? = null
 
@@ -21,15 +20,13 @@ class GroupMembersActivity : FragmentActivity() {
         val groupMembersAdapter = GroupMembersAdapter()
         val groupMembersList: RecyclerView = findViewById(R.id.group_members_list)
         groupMembersList.adapter = groupMembersAdapter
-        val mCreateGroupMembersListButton = findViewById<Button>(R.id.add_group_member)
-        mCreateGroupMembersListButton.isEnabled = true
-        mCreateGroupMembersListButton.isClickable = true
+        val mAddGroupMembersListButton = findViewById<Button>(R.id.add_group_member)
+        mAddGroupMembersListButton.isEnabled = true
+        mAddGroupMembersListButton.isClickable = true
 
-        /*
-        mCreateGroupMembersListButton.setOnClickListener {
-            showCreateGroupMembersDialog()
+        mAddGroupMembersListButton.setOnClickListener {
+            showAddGroupMembersDialog()
         }
-         */
 
 
         val bundle: Bundle? = intent.extras
@@ -49,14 +46,18 @@ class GroupMembersActivity : FragmentActivity() {
 
 
     }
-/*
-    private fun showCreateGroupMembersDialog() {
-        val dialog = CreateGroupMembersDialogFragment()
-        dialog.show(supportFragmentManager,"CreateProjectDialogFragment")
+
+    private fun showAddGroupMembersDialog() {
+        val dialog = AddGroupMembersDialogFragment()
+        dialog.show(supportFragmentManager,"AddGroupMembersDialogFragment")
     }
 
-    override fun onDialogPositiveClick(name: String) {
-        currentProjectId?.let { projectPlannerViewModel.addTask(it,name) }
+    override fun onDialogPositiveClick(email: String) {
+        val user = projectPlannerViewModel.getUsersByEmail(email)
+        if (user == null) {
+
+        } else {
+            projectPlannerViewModel.addGroupMember(user.id,user.name,user.email,currentProjectId!!)
+        }
     }
-     */
 }

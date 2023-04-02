@@ -39,6 +39,31 @@ fun loadGroupMembers(): List<GroupMembers> {
     return listOf<GroupMembers> (
         GroupMembers(1,"Óskar the Magnificent","osa16@hi.is", 1),
         GroupMembers(2,"Ísak CringeLORD", "isl5@hi.is", 1),
-        GroupMembers(3,"Vigdís Bossman", "vigdis@hi.is", 1),
+        GroupMembers(3,"Óskar the Great", "oskar@hi.is", 1),
+        GroupMembers(4,"Ísak alt. account", "isak@hi.is", 2)
+    )
+}
+
+fun loadUsers(): List<Users> {
+    return listOf<Users> (
+        Users(1,"Óskar the Fabulous","osa16@hi.is"),
+        Users(2,"THE Ísak", "isl5@hi.is"),
+        Users(3,"Óskar the Great", "oskar@hi.is"),
+        Users(4,"Ísak alt. account", "isak@hi.is"),
+        Users(5,"Óskar the Fabulous","oskar16@hi.is"),
+        Users(6,"THE Ísak", "isak5@hi.is")
+    )
+}
+
+fun loadComments(): List<Comments> {
+    return listOf<Comments> (
+        Comments(1,"We started the comments.", 1),
+        Comments(2,"Currently not working, on a coffee break.", 1),
+        Comments(3,"Back to work.", 1),
+        Comments(4,"Almost done.", 1),
+        Comments(5,"I was wrong, not almost done.", 1),
+        Comments(6,"Almost done for real now.", 1),
+        Comments(6,"Almost done.", 2),
+        Comments(6,"Almost done.", 3)
     )
 }

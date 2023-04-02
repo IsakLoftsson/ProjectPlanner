@@ -10,6 +10,10 @@ class Datasource {
     private val tasksLiveData = MutableLiveData(initialTaskList)
     private val initialGroupMembersList = loadGroupMembers()
     private val groupMembersLiveData = MutableLiveData(initialGroupMembersList)
+    private val initialUsersList = loadUsers()
+    private val usersLiveData = MutableLiveData(initialUsersList)
+    private val initialCommentsList = loadComments()
+    private val commentsLiveData = MutableLiveData(initialCommentsList)
 
     fun getProjectList(): LiveData<List<Project>> {
         return projectsLiveData
@@ -52,6 +56,20 @@ class Datasource {
         }
     }
 
+    fun addGroupMembers(groupMembers: GroupMembers) {
+        val curList = groupMembersLiveData.value
+        if (curList == null) {
+            groupMembersLiveData.postValue(listOf(groupMembers))
+        }
+        else {
+            val updList = curList.toMutableList()
+            updList.add(0,groupMembers)
+            groupMembersLiveData.postValue(updList)
+        }
+    }
+
+
+
     fun getTask(id:Long): Task? {
         tasksLiveData.value?.let {task ->
             return task.firstOrNull{it.id == id}
@@ -63,6 +81,10 @@ class Datasource {
         return groupMembersLiveData
     }
 
+    fun getUsersList(): LiveData<List<Users>> {
+        return usersLiveData
+    }
+
     fun getGroupMember(id: Long?): GroupMembers? {
         groupMembersLiveData.value?.let {groupMembers ->
             return groupMembers.firstOrNull{it.id == id}
@@ -70,5 +92,8 @@ class Datasource {
         return null
     }
 
+    fun getCommentsList(): LiveData<List<Comments>> {
+        return commentsLiveData
+    }
 
 }

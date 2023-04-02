@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import `is`.hi.hbv601g.projectplanner.data.Datasource
-import `is`.hi.hbv601g.projectplanner.data.GroupMembers
-import `is`.hi.hbv601g.projectplanner.data.Project
-import `is`.hi.hbv601g.projectplanner.data.Task
+import `is`.hi.hbv601g.projectplanner.data.*
 import kotlin.random.Random
 
 class ProjectPlannerViewModel : ViewModel() {
@@ -15,6 +12,7 @@ class ProjectPlannerViewModel : ViewModel() {
     val projectsLiveData = datasource.getProjectList()
     val tasksLiveData = datasource.getTaskList()
     val groupMembersLiveData = datasource.getGroupMembersList()
+    val UsersLiveData = datasource.getUsersList()
 
     fun getProjectsByUserId(id:Long): LiveData<List<Project>> {
         val filteredList = projectsLiveData.value?.filter{ project -> project.ownerId == id}
@@ -109,5 +107,27 @@ class ProjectPlannerViewModel : ViewModel() {
                 groupMembersNames += item.name
         }
         return groupMembersNames
+    }
+
+    fun getUsersByEmail(email: String?): Users? {
+        UsersLiveData.value?.let {users ->
+            return users.firstOrNull{it.email == email}
+        }
+        return null
+    }
+
+    fun addGroupMember(id: Long, name: String, email: String, projectId: Long) {
+        val newGroupMember = GroupMembers(
+            id,
+            name,
+            email,
+            projectId
+        )
+        println("------------ ADD GROUP MEMBER ---------------")
+        println("id: " + id)
+        println("name: " + name)
+        println("email: " + email)
+        println("projectId: " + projectId)
+        datasource.addGroupMembers(newGroupMember)
     }
 }
