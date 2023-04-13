@@ -57,12 +57,22 @@ interface ProjectDao {
     fun insertProject(project: Project)
 }
 
-@Database(entities = [AppUser::class,Project::class,Task::class,ProjectMembers::class], version = 1)
+@Dao
+interface CommentDao {
+    @Query("SELECT * FROM Comment WHERE taskId == :taskId")
+    fun getByTaskId(taskId: Long): List<Comment>
+
+    @Insert
+    fun insertComment(comment: Comment)
+}
+
+@Database(entities = [AppUser::class,Project::class,Task::class,ProjectMembers::class,Comment::class], version = 1)
 abstract class ProjectPlannerDatabase: RoomDatabase() {
     abstract fun appUserDao(): AppUserDao
     abstract fun projectMembersDao(): ProjectMembersDao
     abstract fun taskDao(): TaskDao
     abstract fun projectDao(): ProjectDao
+    abstract fun commentDao(): CommentDao
 }
 
 private lateinit var INSTANCE: ProjectPlannerDatabase

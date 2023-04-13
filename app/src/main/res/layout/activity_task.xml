@@ -65,14 +65,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_status"/>
 
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task_description"
+        android:autofillHints="Write your comment here"
+        android:hint="Write your comment here"
+        android:inputType="text|textMultiLine" />
+
+    <Button
+        android:id="@+id/submit_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/comment"
+        app:layout_constraintStart_toEndOf="@+id/comment"
+        android:text="@string/submit"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_description" />
+        app:layout_constraintTop_toBottomOf="@+id/comment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

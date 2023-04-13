@@ -10,11 +10,12 @@ import `is`.hi.hbv601g.projectplanner.data.*
 import kotlin.random.Random
 
 class ProjectPlannerViewModel(application: Application) : AndroidViewModel(application) {
-    private val datasource = Datasource()
     private val projectPlannerRepository = ProjectPlannerRepository(getDatabase(application))
     val projectsLiveData = projectPlannerRepository.projectsLiveData
     val tasksLiveData = projectPlannerRepository.tasksLiveData
     val groupMembersLiveData = projectPlannerRepository.groupMembersLiveData
+    val commentsLiveData = projectPlannerRepository.commentsLiveData
+    val curTaskLiveData = projectPlannerRepository.curTaskLiveData
     val loginLiveData = MutableLiveData<Boolean>(false)
 
     fun getProjectsByUserId(id:Long) {
@@ -27,6 +28,14 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
 
     fun getGroupMembersByProjectId(id:Long) {
         projectPlannerRepository.setGroupMembers(id)
+    }
+
+    fun getCommentsByTaskId(id:Long) {
+        projectPlannerRepository.setComments(id)
+    }
+
+    fun getCurTask(id:Long) {
+        projectPlannerRepository.setCurTask(id)
     }
 
     suspend fun getUserById(id:Long): AppUser? {
@@ -119,19 +128,17 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
         loginLiveData.postValue(true)
     }
 
-    fun addComment(id: Long, name: String, email: String, projectId: Long) {
-        val newGroupMember = GroupMembers(
-            id,
-            name,
-            email,
-            projectId
+    fun addComment(taskId: Long, commenter: String, text: String) {
+        val newComment = Comment(
+            Random.nextLong(),
+            taskId,
+            commenter,
+            text
         )
-        println("------------ ADD GROUP MEMBER ---------------")
-        println("id: " + id)
-        println("name: " + name)
-        println("email: " + email)
-        println("projectId: " + projectId)
-        datasource.addGroupMembers(newGroupMember)
+        println("------------ ADD COMMENT ---------------")
+        println(commenter)
+        println(text)
+        projectPlannerRepository.addComment(newComment)
     }
 
     class Factory(val app: Application): ViewModelProvider.Factory {

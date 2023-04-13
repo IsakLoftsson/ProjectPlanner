@@ -25,9 +25,10 @@ class GroupMembersSpinnerAdapter(context: Context, @LayoutRes private val layout
     }
 
     private fun createViewFromResource(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view: TextView = convertView as TextView? ?: LayoutInflater.from(context).inflate(layoutResource, parent, false) as TextView
+        val view = convertView ?: LayoutInflater.from(context).inflate(layoutResource, parent, false)
+        val textView = view.findViewById<TextView>(R.id.task_name)
         val name = members[position].firstName+" "+members[position].lastName
-        view.text = name
+        textView.text = name
         return view
     }
 }

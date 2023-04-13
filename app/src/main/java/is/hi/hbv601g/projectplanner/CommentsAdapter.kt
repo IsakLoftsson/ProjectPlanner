@@ -7,17 +7,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import `is`.hi.hbv601g.projectplanner.data.Comments
+import `is`.hi.hbv601g.projectplanner.data.Comment
 
-class CommentsAdapter() : ListAdapter<Comments, CommentsAdapter.CommentsViewHolder>(CommentsDiffCallback){
+class CommentsAdapter() : ListAdapter<Comment, CommentsAdapter.CommentsViewHolder>(CommentsDiffCallback){
     class CommentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val commentsName: TextView = itemView.findViewById(R.id.comments_name)
-        private var currentComments: Comments? = null
+        private val commenterName: TextView = itemView.findViewById(R.id.commenter)
+        private val commentText: TextView = itemView.findViewById(R.id.comment_text)
+        private var currentComment: Comment? = null
 
-        fun bind(comments: Comments) {
-            currentComments = comments
-            commentsName.text = comments.description
-
+        fun bind(comment: Comment) {
+            currentComment = comment
+            commenterName.text = comment.commenter
+            commentText.text = comment.text
         }
     }
 
@@ -32,12 +33,12 @@ class CommentsAdapter() : ListAdapter<Comments, CommentsAdapter.CommentsViewHold
     }
 }
 
-object CommentsDiffCallback : DiffUtil.ItemCallback<Comments>() {
-    override fun areItemsTheSame(oldItem: Comments, newItem: Comments): Boolean {
+object CommentsDiffCallback : DiffUtil.ItemCallback<Comment>() {
+    override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Comments, newItem: Comments): Boolean {
+    override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
         return oldItem.id == newItem.id
     }
 }

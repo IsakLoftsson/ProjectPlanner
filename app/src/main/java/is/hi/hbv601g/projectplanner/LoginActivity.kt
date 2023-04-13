@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
                         val sharedPref = this@LoginActivity.getSharedPreferences("prefs",Context.MODE_PRIVATE)
                         val editor = sharedPref.edit()
                         editor.putLong("userId",user.id)
+                        editor.putString("userFirstName",user.firstName)
                         editor.apply()
                         viewModel.successLogin()
                     } else {

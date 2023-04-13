@@ -1,12 +1,16 @@
 package `is`.hi.hbv601g.projectplanner
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.r0adkll.slidr.Slidr
 import `is`.hi.hbv601g.projectplanner.data.AppUser
+import `is`.hi.hbv601g.projectplanner.data.Comment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +57,22 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
         val commentsList: RecyclerView = findViewById(R.id.comments_list)
         commentsList.adapter = commentsAdapter
 
+        val commentEdit: EditText = findViewById(R.id.comment)
+        val commentSubmit: Button = findViewById(R.id.submit_comment)
+
+        commentSubmit.setOnClickListener {
+            val sharedPref = this.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val commenter = sharedPref.getString("userFirstName","Anonymous")
+            val comment = commentEdit.text.toString()
+            if (comment.isNotEmpty()) {
+                viewModel.addComment(currentTaskId!!,commenter!!,comment)
+                commentEdit.text.clear()
+            }
+            else {
+                commentEdit.error = "Cannot have empty comment"
+            }
+        }
+
         val bundle: Bundle? = intent.extras
 
         if (bundle != null) {
@@ -65,22 +85,33 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
             currentTaskStatus = bundle.getString("status")
         }
 
-        println("Whatever: "+currentTaskId)
+        viewModel.getCommentsByTaskId(currentTaskId!!)
+        viewModel.commentsLiveData.observe(this, {
+            it?.let {
+                commentsAdapter.submitList(it as MutableList<Comment>)
+            }
+        })
 
-        currentTaskId?.let {
+        println("Whatever: "+currentTaskId)
+        viewModel.getCurTask(currentTaskId!!)
+        viewModel.curTaskLiveData.observe(this, {
+            currentTaskName = it.name
+            currentTaskDescription = it.description
+            currentTaskDeadline = it.deadline
+            currentTaskOwner = it.ownerId
+            currentTaskStatus = it.status
+            taskName.text = it.name
+            taskDescription.text = it.description
+            taskDeadline.text = it.deadline
+            taskStatus.text = it.status
             CoroutineScope(Dispatchers.IO).launch {
-                println("Setting task texts")
-                val owner = currentTaskOwner?.let { it1 -> viewModel.getUserById(it1) }
-                val ownerName = (owner?.firstName ?: "John") +" "+ (owner?.lastName ?: "Doe")
+                val owner = viewModel.getUserById(it.ownerId)
+                val ownerName = (owner?.firstName ?:"Not Assigned")+" "+(owner?.lastName ?: "")
                 withContext(Dispatchers.Main) {
-                    taskName.text = currentTaskName
-                    taskDescription.text = currentTaskDescription
-                    taskDeadline.text = currentTaskDeadline
                     taskOwner.text = ownerName
-                    taskStatus.text = currentTaskStatus
                 }
             }
-        }
+        })
     }
 
     private fun showTaskDeadlineDialogFragment() {

@@ -14,6 +14,8 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
     val projectsLiveData = MutableLiveData<List<Project>>()
     val tasksLiveData = MutableLiveData<List<Task>>()
     val groupMembersLiveData = MutableLiveData<List<AppUser>>()
+    val commentsLiveData = MutableLiveData<List<Comment>>()
+    val curTaskLiveData = MutableLiveData<Task>()
 
     fun addProject(project: Project) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -34,6 +36,7 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
     fun addTask(task: Task) {
         CoroutineScope(Dispatchers.IO).launch {
             database.taskDao().insertTask(task)
+            setCurTask(task.id)
         }
         val curList = tasksLiveData.value
         if (curList == null) {
@@ -50,6 +53,21 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
         CoroutineScope(Dispatchers.IO).launch {
             database.projectMembersDao().insertProjectMember(projectMembers)
             setGroupMembers(projectMembers.projectId)
+        }
+    }
+
+    fun addComment(comment: Comment) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.commentDao().insertComment(comment)
+        }
+        val curList = commentsLiveData.value
+        if (curList == null) {
+            commentsLiveData.postValue(listOf(comment))
+        }
+        else {
+            val updList = curList.toMutableList()
+            updList.add(0,comment)
+            commentsLiveData.postValue(updList)
         }
     }
 
@@ -72,6 +90,13 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
         }
     }
 
+    fun setCurTask(id: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val curTask = database.taskDao().getById(id)
+            curTaskLiveData.postValue(curTask)
+        }
+    }
+
     fun setProjects(userId: Long) {
         CoroutineScope(Dispatchers.IO).launch {
             val listOfIds = database.projectMembersDao().getByUserId(userId)
@@ -85,6 +110,13 @@ class ProjectPlannerRepository(private val database: ProjectPlannerDatabase) {
             val listOfIds = database.projectMembersDao().getByProjectId(projectId)
             val curList = database.appUserDao().getAllByIds(listOfIds)
             groupMembersLiveData.postValue(curList)
+        }
+    }
+
+    fun setComments(taskId: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val curList = database.commentDao().getByTaskId(taskId)
+            commentsLiveData.postValue(curList)
         }
     }
 
