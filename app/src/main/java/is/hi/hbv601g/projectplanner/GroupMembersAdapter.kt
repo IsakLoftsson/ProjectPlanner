@@ -12,10 +12,18 @@ import `is`.hi.hbv601g.projectplanner.data.AppUser
 import `is`.hi.hbv601g.projectplanner.data.Project
 import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
-class GroupMembersAdapter() : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback) {
-    class GroupMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class GroupMembersAdapter(private val onClick: (AppUser) -> Unit) : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback) {
+    class GroupMembersViewHolder(itemView: View, val onClick: (AppUser) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val groupMembersName: TextView = itemView.findViewById(R.id.task_name)
         private var currentGroupMembers: AppUser? = null
+
+        init {
+            itemView.setOnClickListener {
+                currentGroupMembers?.let {
+                    onClick(it)
+                }
+            }
+        }
 
         fun bind(groupMembers: AppUser) {
             currentGroupMembers = groupMembers
@@ -26,7 +34,7 @@ class GroupMembersAdapter() : ListAdapter<AppUser, GroupMembersAdapter.GroupMemb
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : GroupMembersAdapter.GroupMembersViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.task_item,parent,false)
-        return GroupMembersAdapter.GroupMembersViewHolder(view)
+        return GroupMembersAdapter.GroupMembersViewHolder(view, onClick)
     }
 
     override fun onBindViewHolder(holder: GroupMembersAdapter.GroupMembersViewHolder, position: Int) {

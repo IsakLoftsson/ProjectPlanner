@@ -17,6 +17,18 @@
         android:textColor="#000"
         android:textSize="21sp"/>
 
+    <TextView
+        android:id="@+id/group_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click on a member to add to contacts"
+        android:layout_margin="10dp"
+        android:textColor="#4E4E4E"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_title"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/group_members_list"
         android:layout_width="0dp"
@@ -26,7 +38,7 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/group_text"/>
 
     <Button
         android:id="@+id/add_group_member"
