@@ -68,11 +68,11 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
             projectTitle.text = currentProjectTitle
             projectDescription.text = currentProjectDescription
 
-            viewModel.tasksLiveData.observe(this, {
+            viewModel.tasksLiveData.observe(this) {
                 it?.let {
                     taskAdapter.submitList(it as MutableList<Task>)
                 }
-            })
+            }
         }
     }
 

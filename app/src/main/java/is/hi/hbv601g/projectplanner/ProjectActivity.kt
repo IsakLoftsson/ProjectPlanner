@@ -45,11 +45,11 @@ class ProjectActivity : FragmentActivity(), CreateProjectDialogFragment.CreatePr
 
         viewModel.getProjectsByUserId(currentUserId)
 
-        viewModel.projectsLiveData.observe(this, {
+        viewModel.projectsLiveData.observe(this) {
             it?.let {
                 projectAdapter.submitList(it as MutableList<Project>)
             }
-        })
+        }
     }
 
     override fun onDestroy() {

@@ -108,13 +108,14 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
         projectPlannerRepository.addProjectMember(newProjectMember)
     }
 
-    fun registerUser(firstName: String, lastName: String, email: String, password: String) {
+    fun registerUser(firstName: String, lastName: String, email: String, password: String, phoneNumber: Int) {
         val newUser = AppUser(
             Random.nextLong(),
             firstName,
             lastName,
             email,
-            password
+            password,
+            phoneNumber
         )
         projectPlannerRepository.registerUser(newUser)
     }

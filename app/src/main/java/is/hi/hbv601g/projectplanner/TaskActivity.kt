@@ -86,15 +86,15 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
         }
 
         viewModel.getCommentsByTaskId(currentTaskId!!)
-        viewModel.commentsLiveData.observe(this, {
+        viewModel.commentsLiveData.observe(this) {
             it?.let {
                 commentsAdapter.submitList(it as MutableList<Comment>)
             }
-        })
+        }
 
         println("Whatever: "+currentTaskId)
         viewModel.getCurTask(currentTaskId!!)
-        viewModel.curTaskLiveData.observe(this, {
+        viewModel.curTaskLiveData.observe(this) {
             currentTaskName = it.name
             currentTaskDescription = it.description
             currentTaskDeadline = it.deadline
@@ -106,12 +106,12 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
             taskStatus.text = it.status
             CoroutineScope(Dispatchers.IO).launch {
                 val owner = viewModel.getUserById(it.ownerId)
-                val ownerName = (owner?.firstName ?:"Not Assigned")+" "+(owner?.lastName ?: "")
+                val ownerName = (owner?.firstName ?: "Not Assigned") + " " + (owner?.lastName ?: "")
                 withContext(Dispatchers.Main) {
                     taskOwner.text = ownerName
                 }
             }
-        })
+        }
     }
 
     private fun showTaskDeadlineDialogFragment() {
