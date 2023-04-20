@@ -29,8 +29,9 @@ class TaskDeadlineDialogFragment : DialogFragment() {
                 val deadline = view.findViewById<DatePicker>(R.id.task_deadline)
                 val calendar = Calendar.getInstance()
                 calendar.set(deadline.year,deadline.month,deadline.dayOfMonth)
-                val dateStringFormat = SimpleDateFormat("dd-MM-yyy")
+                val dateStringFormat = SimpleDateFormat("dd-MM-yyyy")
                 val dateString = dateStringFormat.format(calendar.time)
+                println(dateString)
                 listener.onTaskDeadlineDialogPositiveClick(dateString)
                 this.dismiss()
             }

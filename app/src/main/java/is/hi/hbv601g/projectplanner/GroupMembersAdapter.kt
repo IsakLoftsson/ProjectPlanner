@@ -3,14 +3,11 @@ package `is`.hi.hbv601g.projectplanner
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SpinnerAdapter
 import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import `is`.hi.hbv601g.projectplanner.data.AppUser
-import `is`.hi.hbv601g.projectplanner.data.Project
-import `is`.hi.hbv601g.projectplanner.data.GroupMembers
 
 class GroupMembersAdapter(private val onClick: (AppUser) -> Unit) : ListAdapter<AppUser, GroupMembersAdapter.GroupMembersViewHolder>(GroupMembersDiffCallback) {
     class GroupMembersViewHolder(itemView: View, val onClick: (AppUser) -> Unit) : RecyclerView.ViewHolder(itemView) {

@@ -2,13 +2,17 @@ package `is`.hi.hbv601g.projectplanner.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-@Entity
 data class AppUser(
-    @PrimaryKey val id: Long,
+    @SerializedName("id")
+    val id: Long,
+    @SerializedName("firstName")
     val firstName: String,
+    @SerializedName("lastName")
     val lastName: String,
-    val email: String,
-    val password: String,
-    val phoneNumber: Int
+    @SerializedName("phoneNumber")
+    val phoneNumber: Int,
+    @SerializedName("email")
+    val email: String
 )
