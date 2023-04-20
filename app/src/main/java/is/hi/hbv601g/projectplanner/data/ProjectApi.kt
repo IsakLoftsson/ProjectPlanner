@@ -5,9 +5,9 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ProjectApi {
-    @POST("/projects/{id}")
+    @POST("/api/addproject/{id}")
     suspend fun addProject(@Body addProjectRequest: AddProjectRequest,@Path("id") userId: Long): Response<Boolean>
 
-    @GET("/addproject/{id}")
+    @GET("/api/projects/{id}")
     suspend fun getProjects(@Path("id") userId: Long): Response<List<Project>>
 }

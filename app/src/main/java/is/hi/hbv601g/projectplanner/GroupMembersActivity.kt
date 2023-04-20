@@ -63,7 +63,7 @@ class GroupMembersActivity : FragmentActivity(), AddGroupMembersDialogFragment.A
         CoroutineScope(Dispatchers.IO).launch {
             val user = viewModel.getUserByEmail(email)
             if (user != null){
-                viewModel.addProjectMember(user.id,currentProjectId!!)
+                viewModel.addProjectMember(email,currentProjectId!!)
             }
         }
     }

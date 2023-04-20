@@ -1,6 +1,7 @@
 package `is`.hi.hbv601g.projectplanner
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -95,14 +96,17 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
         println("Whatever: "+currentTaskId)
         viewModel.getCurTask(currentTaskId!!)
         viewModel.curTaskLiveData.observe(this, {
+            val dateStringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+            val date = dateStringFormat.parse(it.deadline)
+            val dateStringFormat2 = SimpleDateFormat("dd-MM-yyyy")
             currentTaskName = it.name
             currentTaskDescription = it.description
-            currentTaskDeadline = it.deadline
+            currentTaskDeadline = dateStringFormat2.format(date)
             currentTaskOwner = it.ownerId
             currentTaskStatus = it.status
             taskName.text = it.name
             taskDescription.text = it.description
-            taskDeadline.text = it.deadline
+            taskDeadline.text = dateStringFormat2.format(date)
             taskStatus.text = it.status
             CoroutineScope(Dispatchers.IO).launch {
                 val owner = viewModel.getUserById(it.ownerId)
@@ -134,10 +138,12 @@ class TaskActivity : FragmentActivity(), TaskDeadlineDialogFragment.TaskDeadline
     }
 
     override fun onTaskStatusDialogPositiveClick(status: String) {
-        currentTaskId?.let { viewModel.editTask(currentTaskId!!,currentProjectId!!,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline.toString(), currentTaskOwner!!, status) }
+        println(currentTaskDeadline.toString())
+        currentTaskId?.let { viewModel.editTask(currentTaskId!!,currentProjectId!!,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline!!, currentTaskOwner!!, status) }
     }
 
     override fun onTaskOwnerDialogPositiveClick(owner: AppUser) {
-        currentTaskId?.let { viewModel.editTask(currentTaskId!!,currentProjectId!!,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline.toString(), owner.id, currentTaskStatus.toString()) }
+        println(currentTaskDeadline.toString())
+        currentTaskId?.let { viewModel.editTask(currentTaskId!!,currentProjectId!!,currentTaskName.toString(), currentTaskDescription.toString(), currentTaskDeadline!!, owner.id, currentTaskStatus.toString()) }
     }
 }

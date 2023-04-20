@@ -5,10 +5,16 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface TaskApi {
-    @POST("/addtask/{id}")
+    @POST("/api/addtask/{id}")
     suspend fun addTask(@Body addTaskRequest: AddTaskRequest, @Path("id") projectId: Long): Response<Boolean>
 
-    @GET("/tasks/{id}")
+    @POST("/api/edittask")
+    suspend fun editTask(@Body task: Task): Response<Boolean>
+
+    @GET("/api/tasks/{id}")
     suspend fun getTasks(@Path("id") projectId: Long): Response<List<Task>>
+
+    @GET("/api/task/{id}")
+    suspend fun getTaskById(@Path("id") taskId: Long): Response<Task>
 
 }

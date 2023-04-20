@@ -7,10 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import `is`.hi.hbv601g.projectplanner.data.*
+import `is`.hi.hbv601g.projectplanner.data.requests.AddProjectMemberRequest
+import `is`.hi.hbv601g.projectplanner.data.requests.RegistrationRequest
 import kotlin.random.Random
 
 class ProjectPlannerViewModel(application: Application) : AndroidViewModel(application) {
-    private val projectPlannerRepository = ProjectPlannerRepository(getDatabase(application))
+    private val projectPlannerRepository = ProjectPlannerRepository()
     val projectsLiveData = projectPlannerRepository.projectsLiveData
     val tasksLiveData = projectPlannerRepository.tasksLiveData
     val groupMembersLiveData = projectPlannerRepository.groupMembersLiveData
@@ -96,26 +98,15 @@ class ProjectPlannerViewModel(application: Application) : AndroidViewModel(appli
         println("deadline: "+deadline)
         println("ownerId: "+ownerId)
         println("status: "+status)
-        projectPlannerRepository.addTask(newTask)
+        projectPlannerRepository.editTask(newTask)
     }
 
-    fun addProjectMember(userId: Long, projectId: Long) {
-        val newProjectMember = ProjectMembers(
-            Random.nextLong(),
-            userId,
-            projectId
-        )
-        projectPlannerRepository.addProjectMember(newProjectMember)
+    fun addProjectMember(email: String, projectId: Long) {
+        projectPlannerRepository.addProjectMember(AddProjectMemberRequest(email),projectId)
     }
 
     fun registerUser(firstName: String, lastName: String, email: String, password: String) {
-        val newUser = AppUser(
-            Random.nextLong(),
-            firstName,
-            lastName,
-            email,
-            password
-        )
+        val newUser = RegistrationRequest(firstName,lastName,password,email)
         projectPlannerRepository.registerUser(newUser)
     }
 

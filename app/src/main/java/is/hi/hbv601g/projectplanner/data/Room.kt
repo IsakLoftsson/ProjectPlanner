@@ -3,7 +3,7 @@ package `is`.hi.hbv601g.projectplanner.data
 import android.content.Context
 import androidx.room.*
 
-@Dao
+/*@Dao
 interface AppUserDao {
     @Query("SELECT * FROM AppUser WHERE id == :id")
     fun getById(id: Long): AppUser
@@ -87,4 +87,4 @@ fun getDatabase(context: Context): ProjectPlannerDatabase {
         }
     }
     return INSTANCE
-}
+}*/

@@ -5,9 +5,9 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface CommentApi {
-    @POST("/addcomment")
+    @POST("/api/addcomment")
     suspend fun addComment(@Body addCommentRequest: AddCommentRequest): Response<Boolean>
 
-    @GET("/comments/{id}")
+    @GET("/api/comments/{id}")
     suspend fun getComments(@Path("id") taskId: Long): Response<List<Comment>>
 }
