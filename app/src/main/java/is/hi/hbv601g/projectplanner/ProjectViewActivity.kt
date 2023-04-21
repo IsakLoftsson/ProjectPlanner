@@ -95,6 +95,6 @@ class ProjectViewActivity : FragmentActivity(), CreateTaskDialogFragment.CreateT
     }
 
     override fun onDialogPositiveClick(name: String, description: String, deadline: String, status: String) {
-        currentProjectId?.let { viewModel.addTask(it,name, description, deadline, 2, status) }
+        currentProjectId?.let { viewModel.addTask(it,name, description, deadline, 0, status) }
     }
 }
